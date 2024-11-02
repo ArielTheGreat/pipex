@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frocha <frocha@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/02 11:01:33 by frocha            #+#    #+#             */
-/*   Updated: 2024/11/02 11:01:34 by frocha           ###   ########.fr       */
+/*   Created: 2024/10/07 23:15:47 by frocha            #+#    #+#             */
+/*   Updated: 2024/10/07 23:15:49 by frocha           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "libft.h"
 
-int main(int argc, char **argv)
+int	ft_lstsize(t_list *lst)
 {
-    if (argc == 5)
-    {
+	int		counter;
+	t_list	*temporal;
 
-    }else
-    {
-        
-    }
-    return (0);
+	counter = 0;
+	temporal = lst;
+	while (temporal != NULL)
+	{
+		counter++;
+		temporal = temporal->next;
+	}
+	return (counter);
 }

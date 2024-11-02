@@ -1,23 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frocha <frocha@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/02 11:01:33 by frocha            #+#    #+#             */
-/*   Updated: 2024/11/02 11:01:34 by frocha           ###   ########.fr       */
+/*   Created: 2024/10/07 22:44:31 by frocha            #+#    #+#             */
+/*   Updated: 2024/10/07 22:44:48 by frocha           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "libft.h"
 
-int main(int argc, char **argv)
+void	*ft_calloc(size_t count, size_t size)
 {
-    if (argc == 5)
-    {
+	void	*initialized_mem;
+	size_t	counter;
 
-    }else
-    {
-        
-    }
-    return (0);
+	if (count == 0 || size == 0)
+		return (malloc(1));
+	initialized_mem = malloc(count * size);
+	if (initialized_mem == NULL)
+	{
+		return (NULL);
+	}
+	counter = 0;
+	while (counter < (count * size))
+	{
+		*((unsigned char *)initialized_mem + counter) = 0;
+		counter++;
+	}
+	return (initialized_mem);
 }

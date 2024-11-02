@@ -1,23 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frocha <frocha@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/02 11:01:33 by frocha            #+#    #+#             */
-/*   Updated: 2024/11/02 11:01:34 by frocha           ###   ########.fr       */
+/*   Created: 2024/10/07 21:52:21 by frocha            #+#    #+#             */
+/*   Updated: 2024/10/07 21:52:22 by frocha           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int main(int argc, char **argv)
+int	ft_tolower(int character)
 {
-    if (argc == 5)
-    {
-
-    }else
-    {
-        
-    }
-    return (0);
+	if (character >= 'A' && character <= 'Z')
+		return (character + 32);
+	return (character);
 }

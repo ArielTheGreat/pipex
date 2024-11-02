@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   ft_isprint.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frocha <frocha@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/02 11:01:33 by frocha            #+#    #+#             */
-/*   Updated: 2024/11/02 11:01:34 by frocha           ###   ########.fr       */
+/*   Created: 2024/10/07 21:47:40 by frocha            #+#    #+#             */
+/*   Updated: 2024/10/07 21:47:43 by frocha           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int main(int argc, char **argv)
+int	ft_isprint(int character)
 {
-    if (argc == 5)
-    {
-
-    }else
-    {
-        
-    }
-    return (0);
+	if (character >= 32 && character <= 126)
+	{
+		return (1);
+	}
+	else
+	{
+		return (0);
+	}
 }

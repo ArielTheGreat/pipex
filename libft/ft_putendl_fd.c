@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frocha <frocha@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/02 11:01:33 by frocha            #+#    #+#             */
-/*   Updated: 2024/11/02 11:01:34 by frocha           ###   ########.fr       */
+/*   Created: 2024/10/07 23:06:18 by frocha            #+#    #+#             */
+/*   Updated: 2024/10/07 23:06:33 by frocha           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "libft.h"
 
-int main(int argc, char **argv)
+void	ft_putendl_fd(char *s, int fd)
 {
-    if (argc == 5)
-    {
+	int		counter;
+	char	newline;
 
-    }else
-    {
-        
-    }
-    return (0);
+	counter = 0;
+	while (*(s + counter) != '\0')
+	{
+		write(fd, s + counter, 1);
+		counter++;
+	}
+	newline = '\n';
+	write(fd, &newline, 1);
 }

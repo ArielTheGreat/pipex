@@ -1,23 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frocha <frocha@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/02 11:01:33 by frocha            #+#    #+#             */
-/*   Updated: 2024/11/02 11:01:34 by frocha           ###   ########.fr       */
+/*   Created: 2024/10/07 22:13:35 by frocha            #+#    #+#             */
+/*   Updated: 2024/10/07 22:13:39 by frocha           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "libft.h"
 
-int main(int argc, char **argv)
+size_t	ft_strlcpy(char *restrict dst, const char *restrict src, size_t dstsize)
 {
-    if (argc == 5)
-    {
+	size_t	counter;
+	size_t	counter2;
 
-    }else
-    {
-        
-    }
-    return (0);
+	counter = 0;
+	counter2 = ft_strlen(src);
+	if (dstsize < 1)
+		return (counter2);
+	while (src[counter] != '\0' && counter < dstsize - 1)
+	{
+		dst[counter] = src[counter];
+		counter++;
+	}
+	dst[counter] = '\0';
+	return (counter2);
 }

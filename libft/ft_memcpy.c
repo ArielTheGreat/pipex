@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frocha <frocha@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/02 11:01:33 by frocha            #+#    #+#             */
-/*   Updated: 2024/11/02 11:01:34 by frocha           ###   ########.fr       */
+/*   Created: 2024/10/07 22:05:49 by frocha            #+#    #+#             */
+/*   Updated: 2024/10/07 22:06:17 by frocha           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "libft.h"
 
-int main(int argc, char **argv)
+void	*ft_memcpy(void *restrict dst, const void *restrict src, size_t n)
 {
-    if (argc == 5)
-    {
+	size_t	counter;
 
-    }else
-    {
-        
-    }
-    return (0);
+	counter = 0;
+	if (!dst && !src)
+		return (NULL);
+	while (counter < n)
+	{
+		((char *) dst)[counter] = ((const char *) src)[counter];
+		counter++;
+	}
+	return (dst);
 }

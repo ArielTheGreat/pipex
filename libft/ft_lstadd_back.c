@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frocha <frocha@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/02 11:01:33 by frocha            #+#    #+#             */
-/*   Updated: 2024/11/02 11:01:34 by frocha           ###   ########.fr       */
+/*   Created: 2024/10/07 23:16:33 by frocha            #+#    #+#             */
+/*   Updated: 2024/10/07 23:16:37 by frocha           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "libft.h"
 
-int main(int argc, char **argv)
+void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-    if (argc == 5)
-    {
+	t_list	*last_node;
 
-    }else
-    {
-        
-    }
-    return (0);
+	if (*lst == NULL)
+	{
+		*lst = new;
+	}
+	else
+	{
+		last_node = ft_lstlast(*lst);
+		last_node->next = new;
+	}
 }

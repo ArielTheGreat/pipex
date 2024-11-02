@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   ft_isascii.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frocha <frocha@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/02 11:01:33 by frocha            #+#    #+#             */
-/*   Updated: 2024/11/02 11:01:34 by frocha           ###   ########.fr       */
+/*   Created: 2024/10/07 21:45:48 by frocha            #+#    #+#             */
+/*   Updated: 2024/10/07 21:45:53 by frocha           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int main(int argc, char **argv)
+int	ft_isascii(int character_number)
 {
-    if (argc == 5)
-    {
-
-    }else
-    {
-        
-    }
-    return (0);
+	if (character_number >= 0 && character_number <= 127)
+	{
+		return (1);
+	}
+	else
+	{
+		return (0);
+	}
 }

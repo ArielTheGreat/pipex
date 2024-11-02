@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frocha <frocha@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/02 11:01:33 by frocha            #+#    #+#             */
-/*   Updated: 2024/11/02 11:01:34 by frocha           ###   ########.fr       */
+/*   Created: 2024/10/07 23:17:51 by frocha            #+#    #+#             */
+/*   Updated: 2024/10/07 23:17:54 by frocha           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "libft.h"
 
-int main(int argc, char **argv)
+void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-    if (argc == 5)
-    {
+	t_list	*p_next;
+	t_list	*p_current;
 
-    }else
-    {
-        
-    }
-    return (0);
+	p_current = *lst;
+	while (p_current != NULL)
+	{
+		p_next = p_current->next;
+		ft_lstdelone(p_current, del);
+		p_current = p_next;
+	}
+	*lst = NULL;
 }

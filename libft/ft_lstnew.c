@@ -1,23 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frocha <frocha@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/02 11:01:33 by frocha            #+#    #+#             */
-/*   Updated: 2024/11/02 11:01:34 by frocha           ###   ########.fr       */
+/*   Created: 2024/10/07 23:15:12 by frocha            #+#    #+#             */
+/*   Updated: 2024/10/07 23:15:16 by frocha           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "libft.h"
 
-int main(int argc, char **argv)
+t_list	*ft_lstnew(void *content)
 {
-    if (argc == 5)
-    {
+	t_list	*p_new_node;
 
-    }else
-    {
-        
-    }
-    return (0);
+	p_new_node = (t_list *)malloc(sizeof(t_list));
+	if (p_new_node == NULL)
+		return (NULL);
+	p_new_node->content = content;
+	p_new_node->next = NULL;
+	return (p_new_node);
 }

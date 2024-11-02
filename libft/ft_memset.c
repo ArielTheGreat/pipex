@@ -1,23 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frocha <frocha@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/02 11:01:33 by frocha            #+#    #+#             */
-/*   Updated: 2024/11/02 11:01:34 by frocha           ###   ########.fr       */
+/*   Created: 2024/10/07 21:59:36 by frocha            #+#    #+#             */
+/*   Updated: 2024/10/07 21:59:56 by frocha           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "libft.h"
 
-int main(int argc, char **argv)
+void	*ft_memset(void *b, int c, size_t len)
 {
-    if (argc == 5)
-    {
+	size_t			a;
+	unsigned char	x;
 
-    }else
-    {
-        
-    }
-    return (0);
+	a = 0;
+	x = (unsigned char)c;
+	if (x < 0 || x > 255)
+		x = 0;
+	while (a < len)
+	{
+		*((unsigned char *)b + a) = x;
+		a++;
+	}
+	return (b);
 }
