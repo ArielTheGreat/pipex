@@ -53,14 +53,32 @@ void handle_number_of_arguments(int argc)
     }
 }
 
+void execute_command()
+{
+    //Execute the command passed as parameter
+}
+
 int main(int argc, char **argv)
 {
     int fd[2];
     int fd_infile, fd_outfile;
+    pid_t pid1, pid2;
 
     handle_number_of_arguments(argc);
     handle_infile_opening(argv[1], &fd_infile);
     handle_outfile_opening(argv[4], &fd_outfile);
     handle_pipe_creation(fd);
+    if ((pid1 = fork()) == 0)
+    {
+        execute_command();
+    }
+
+    if ((pid2 = fork()) == 0)
+    {
+        execute_command();
+    }
+
+    waitpid(pid1, NULL, 0);
+    waitpid(pid2, NULL, 0);
     return (0);
 }
