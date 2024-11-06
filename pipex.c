@@ -44,19 +44,23 @@ void handle_pipe_creation(int *fd)
     }
 }
 
+void handle_number_of_arguments(int argc)
+{
+    if (argc != 5)
+    {
+        perror("Unexpected amount of arguments were given\n");
+        exit(EXIT_FAILURE);
+    }
+}
+
 int main(int argc, char **argv)
 {
     int fd[2];
     int fd_infile, fd_outfile;
 
-    if (argc == 5)
-    {
-        handle_infile_opening(argv[1], &fd_infile);
-        handle_outfile_opening(argv[4], &fd_outfile);
-        handle_pipe_creation(fd);
-    }else
-    {
-        ft_putstr_fd("Unexpected amount of arguments were given",1);
-    }
+    handle_number_of_arguments(argc);
+    handle_infile_opening(argv[1], &fd_infile);
+    handle_outfile_opening(argv[4], &fd_outfile);
+    handle_pipe_creation(fd);
     return (0);
 }
