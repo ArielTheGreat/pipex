@@ -15,19 +15,33 @@
 #include "libft/libft.h"
 #include <stdio.h>
 
-int check_existance_files(char *str)
+void handle_infile_opening(char *str, int *fd_infile)
 {
-    int first_file_fd;
-
-    first_file_fd = open(str, O_RDONLY);
-    if (first_file_fd == -1)
+    *fd_infile = open(str, O_RDONLY);
+    if (*fd_infile == -1)
     {
-        ft_putstr_fd(str,2);
-        ft_putstr_fd(": open: No such file or directory\n",1);
-        close(first_file_fd);
-        return (1);
+        perror("Error opening infile");
+        exit(EXIT_FAILURE);
     }
-    return (0);
+}
+
+void handle_outfile_opening(char *str, int *fd_outfile)
+{
+    *fd_outfile = open(str, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+    if (*fd_outfile == -1)
+    {
+        perror("Error opening outfile");
+        exit(EXIT_FAILURE);
+    }
+}
+
+void handle_pipe_creation(int *fd)
+{
+    if (pipe(fd) == -1)
+    {
+        perror("Error creating the pipe");
+        exit(EXIT_FAILURE);
+    }
 }
 
 int main(int argc, char **argv)
@@ -37,33 +51,9 @@ int main(int argc, char **argv)
 
     if (argc == 5)
     {
-        if (check_existance_files(argv[1]) == 1)
-            exit(EXIT_FAILURE);
-
-        fd_infile = open(argv[1], O_RDONLY);
-        if (fd_infile == -1)
-        {
-            perror("Error opening infile");
-            exit(EXIT_FAILURE);
-        }
-
-        fd_outfile = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
-        if (fd_outfile == -1)
-        {
-            perror("Error opening outfile");
-            close(fd_outfile);
-            exit(EXIT_FAILURE);
-        }
-
-        if (pipe(fd) == -1)
-        {
-            perror("Error creating the pipe");
-            close(fd_infile);
-            close(fd_outfile);
-            exit(EXIT_FAILURE);
-        }
-
-        
+        handle_infile_opening(argv[1], &fd_infile);
+        handle_outfile_opening(argv[4], &fd_outfile);
+        handle_pipe_creation(fd);
     }else
     {
         ft_putstr_fd("Unexpected amount of arguments were given",1);
