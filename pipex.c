@@ -38,6 +38,12 @@ void check_existance_files(char *str, char *str2)
 
 int main(int argc, char **argv)
 {
+    int fd[2];
+
+    if (pipe(fd) == -1) {
+        perror("Error creating the pipe");
+        exit(EXIT_FAILURE);
+    }
     if (argc == 5)
     {
         check_existance_files(argv[1], argv[4]);
