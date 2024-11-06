@@ -15,32 +15,25 @@
 #include "libft/libft.h"
 #include <stdio.h>
 
-void check_existance_files(char *str, char *str2)
+int check_existance_files(char *str)
 {
     int first_file_fd;
-    int second_file_fd;
 
     first_file_fd = open(str, O_RDONLY);
     if (first_file_fd == -1)
     {
-        ft_putstr_fd(str,1);
+        ft_putstr_fd(str,2);
         ft_putstr_fd(": open: No such file or directory\n",1);
+        close(first_file_fd);
+        return (1);
     }
-    close(first_file_fd);
-    second_file_fd = open(str2, O_RDONLY);
-    if (second_file_fd == -1)
-    {
-        ft_putstr_fd(str2,1);
-        ft_putstr_fd(": open: No such file or directory\n",1);
-
-    }
-    close(second_file_fd);
+    return (0);
 }
 
 int main(int argc, char **argv)
 {
     int fd[2];
-    
+
     if (argc == 5)
     {
         if (pipe(fd) == -1)
@@ -48,7 +41,10 @@ int main(int argc, char **argv)
             perror("Error creating the pipe");
             exit(EXIT_FAILURE);
         }
-        check_existance_files(argv[1], argv[4]);
+        if (check_existance_files(argv[1]) == 1)
+        {
+            exit(EXIT_FAILURE);
+        }
     }else
     {
         ft_putstr_fd("Unexpected amount of arguments were given",1);
