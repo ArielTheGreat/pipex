@@ -33,18 +33,37 @@ int check_existance_files(char *str)
 int main(int argc, char **argv)
 {
     int fd[2];
+    int fd_infile, fd_outfile;
 
     if (argc == 5)
     {
+        if (check_existance_files(argv[1]) == 1)
+            exit(EXIT_FAILURE);
+
+        fd_infile = open(argv[1], O_RDONLY);
+        if (fd_infile == -1)
+        {
+            perror("Error opening infile");
+            exit(EXIT_FAILURE);
+        }
+
+        fd_outfile = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+        if (fd_outfile == -1)
+        {
+            perror("Error opening outfile");
+            close(fd_outfile);
+            exit(EXIT_FAILURE);
+        }
+
         if (pipe(fd) == -1)
         {
             perror("Error creating the pipe");
+            close(fd_infile);
+            close(fd_outfile);
             exit(EXIT_FAILURE);
         }
-        if (check_existance_files(argv[1]) == 1)
-        {
-            exit(EXIT_FAILURE);
-        }
+
+        
     }else
     {
         ft_putstr_fd("Unexpected amount of arguments were given",1);
