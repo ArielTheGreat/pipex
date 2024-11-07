@@ -107,12 +107,16 @@ int main(int argc, char **argv, char **envp)
         dup2(fd_infile, STDIN_FILENO);
         dup2(fd[1], STDOUT_FILENO);
         execute_command(argv[2],envp);
+        perror("Error executing first command");
+        exit(EXIT_FAILURE);
     }
     if ((pid2 = fork()) == 0)
     {
         dup2(fd[0], STDIN_FILENO);
         dup2(fd_outfile, STDOUT_FILENO);
         execute_command(argv[3],envp);
+        perror("Error executing second command");
+        exit(EXIT_FAILURE);
     }
 
     waitpid(pid1, NULL, 0);
