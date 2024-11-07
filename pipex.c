@@ -118,6 +118,10 @@ int main(int argc, char **argv, char **envp)
         perror("Error executing second command");
         exit(EXIT_FAILURE);
     }
+    close(fd_infile);
+    close(fd_outfile);
+    close(fd[0]);
+    close(fd[1]);
 
     waitpid(pid1, NULL, 0);
     waitpid(pid2, NULL, 0);
