@@ -53,12 +53,22 @@ void handle_number_of_arguments(int argc)
     }
 }
 
-void execute_command()
+char *get_command_file_path(char *command, char **envp)
 {
-    //Execute the command passed as parameter
+    
 }
 
-int main(int argc, char **argv)
+void execute_command(char *str, char **envp)
+{
+    char **command;
+    char *command_file_path;
+
+    command = ft_split(str, ' ');
+    command_file_path = get_command_file_path(command[0], envp);
+    execve(command_file_path, command, envp);
+}
+
+int main(int argc, char **argv, char **envp)
 {
     int fd[2];
     int fd_infile, fd_outfile;
@@ -70,12 +80,12 @@ int main(int argc, char **argv)
     handle_pipe_creation(fd);
     if ((pid1 = fork()) == 0)
     {
-        execute_command();
+        execute_command(argv[2],envp);
     }
 
     if ((pid2 = fork()) == 0)
     {
-        execute_command();
+        execute_command(argv[3],envp);
     }
 
     waitpid(pid1, NULL, 0);
