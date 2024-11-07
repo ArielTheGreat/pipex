@@ -108,9 +108,10 @@ int main(int argc, char **argv, char **envp)
         dup2(fd[1], STDOUT_FILENO);
         execute_command(argv[2],envp);
     }
-
     if ((pid2 = fork()) == 0)
     {
+        dup2(fd[0], STDIN_FILENO);
+        dup2(fd_outfile, STDOUT_FILENO);
         execute_command(argv[3],envp);
     }
 
