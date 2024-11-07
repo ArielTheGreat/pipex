@@ -10,13 +10,25 @@
 #                                                                              #
 # **************************************************************************** #
 
-#NAME, all, clean, fclean, re
+CC 		= gcc
+CFLAGS 	= -Wall -Wextra -Werror
+
+SRCS 	= pipex.c
+OBJS 	= ${SRCS:.c=.o}
 
 NAME = pipex
 
+all: ${OBJS}
+	@make re -C ./libft
+	@$(CC) ${OBJS} -Llibft -lft -o ${NAME}
+
 clean:
+	@make clean -C ./libft
+	@rm -f ${OBJS}
 
 fclean: clean
+	@make fclean -C ./libft
+	@rm -f ${NAME}
 
 re: fclean all
 
