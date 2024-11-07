@@ -104,6 +104,8 @@ int main(int argc, char **argv, char **envp)
     handle_pipe_creation(fd);
     if ((pid1 = fork()) == 0)
     {
+        dup2(fd_infile, STDIN_FILENO);
+        dup2(fd[1], STDOUT_FILENO);
         execute_command(argv[2],envp);
     }
 
