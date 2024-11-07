@@ -55,7 +55,31 @@ void handle_number_of_arguments(int argc)
 
 char *get_command_file_path(char *command, char **envp)
 {
-    
+    char	**path_directories;
+	char	*full_path;
+	int		env_index;
+	char	*partial_path;
+
+	env_index = 0;
+	while (ft_strnstr(envp[env_index], "PATH", 4) == 0)
+		env_index++;
+	path_directories = ft_split(envp[env_index] + 5, ':');
+	env_index = 0;
+	while (path_directories[env_index])
+	{
+		partial_path = ft_strjoin(path_directories[env_index], "/");
+		full_path = ft_strjoin(partial_path, command);
+		free(partial_path);
+		if (access(full_path, F_OK) == 0)
+			return (full_path);
+		free(full_path);
+		env_index++;
+	}
+	env_index = -1;
+	while (path_directories[++env_index])
+		free(path_directories[env_index]);
+	free(path_directories);
+	return (0);
 }
 
 void execute_command(char *str, char **envp)
