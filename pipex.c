@@ -82,6 +82,13 @@ char *get_command_file_path(char *command, char **envp)
 	return (0);
 }
 
+void free_string_array(char **array) {
+    for (int i = 0; array[i]; i++) {
+        free(array[i]);
+    }
+    free(array);
+}
+
 void execute_command(char *str, char **envp)
 {
     char **command;
@@ -89,7 +96,16 @@ void execute_command(char *str, char **envp)
 
     command = ft_split(str, ' ');
     command_file_path = get_command_file_path(command[0], envp);
+    if (command_file_path == NULL) {
+        perror("Command not found");
+        free_string_array(command);
+        exit(EXIT_FAILURE);
+    }
     execve(command_file_path, command, envp);
+    perror("Error executing command");
+    free_string_array(command);
+    free(command_file_path);
+    exit(EXIT_FAILURE);
 }
 
 int main(int argc, char **argv, char **envp)
