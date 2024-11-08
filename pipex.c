@@ -33,7 +33,8 @@ void handle_number_of_arguments(int argc)
 int main(int argc, char **argv, char **envp)
 {
     int fd[2];
-    int fd_infile, fd_outfile;
+    int fd_infile;
+    int fd_outfile;
     pid_t pid1, pid2;
 
     handle_number_of_arguments(argc);
@@ -42,33 +43,17 @@ int main(int argc, char **argv, char **envp)
     handle_pipe_creation(fd);
     if ((pid1 = fork()) == 0)
     {
-        dup2(fd_infile, STDIN_FILENO);
-        dup2(fd[1], STDOUT_FILENO);
-        close(fd_infile);
-        close(fd_outfile);
-        close(fd[0]);
-        close(fd[1]);
-        execute_command(argv[2],envp);
-        perror("Error executing first command");
-        exit(EXIT_FAILURE);
+        first_child(fd_infile, fd);
+        close_fd(fd_infile, fd_outfile, fd);
+        execute_command_and_fail(argv[2], envp);
     }
     if ((pid2 = fork()) == 0)
     {
-        dup2(fd[0], STDIN_FILENO);
-        dup2(fd_outfile, STDOUT_FILENO);
-        close(fd_infile);
-        close(fd_outfile);
-        close(fd[0]);
-        close(fd[1]);
-        execute_command(argv[3],envp);
-        perror("Error executing second command");
-        exit(EXIT_FAILURE);
+        second_child(fd_outfile, fd);
+        close_fd(fd_infile, fd_outfile, fd);
+        execute_command_and_fail(argv[3], envp);
     }
-    close(fd_infile);
-    close(fd_outfile);
-    close(fd[0]);
-    close(fd[1]);
-
+    close_fd(fd_infile, fd_outfile, fd);
     waitpid(pid1, NULL, 0);
     waitpid(pid2, NULL, 0);
     return (0);
