@@ -13,7 +13,7 @@
 CC 		= gcc
 CFLAGS 	= -Wall -Wextra -Werror
 
-SRCS 	= pipex.c
+SRCS 	= pipex.c utils.c more_utils.c
 OBJS 	= ${SRCS:.c=.o}
 
 NAME = pipex
