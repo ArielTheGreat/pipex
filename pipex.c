@@ -10,30 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fcntl.h>
-#include <unistd.h>
-#include "libft/libft.h"
-#include <stdio.h>
-
-void handle_infile_opening(char *str, int *fd_infile)
-{
-    *fd_infile = open(str, O_RDONLY);
-    if (*fd_infile == -1)
-    {
-        perror("Error opening infile");
-        exit(EXIT_FAILURE);
-    }
-}
-
-void handle_outfile_opening(char *str, int *fd_outfile)
-{
-    *fd_outfile = open(str, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-    if (*fd_outfile == -1)
-    {
-        perror("Error opening outfile");
-        exit(EXIT_FAILURE);
-    }
-}
+#include "pipex.h"
 
 void handle_pipe_creation(int *fd)
 {
@@ -51,61 +28,6 @@ void handle_number_of_arguments(int argc)
         perror("Unexpected amount of arguments were given\n");
         exit(EXIT_FAILURE);
     }
-}
-
-char *get_command_file_path(char *command, char **envp)
-{
-    char	**path_directories;
-	char	*full_path;
-	int		env_index;
-	char	*partial_path;
-
-	env_index = 0;
-	while (ft_strnstr(envp[env_index], "PATH", 4) == 0)
-		env_index++;
-	path_directories = ft_split(envp[env_index] + 5, ':');
-	env_index = 0;
-	while (path_directories[env_index])
-	{
-		partial_path = ft_strjoin(path_directories[env_index], "/");
-		full_path = ft_strjoin(partial_path, command);
-		free(partial_path);
-		if (access(full_path, F_OK) == 0)
-			return (full_path);
-		free(full_path);
-		env_index++;
-	}
-	env_index = -1;
-	while (path_directories[++env_index])
-		free(path_directories[env_index]);
-	free(path_directories);
-	return (0);
-}
-
-void free_string_array(char **array) {
-    for (int i = 0; array[i]; i++) {
-        free(array[i]);
-    }
-    free(array);
-}
-
-void execute_command(char *str, char **envp)
-{
-    char **command;
-    char *command_file_path;
-
-    command = ft_split(str, ' ');
-    command_file_path = get_command_file_path(command[0], envp);
-    if (command_file_path == NULL) {
-        perror("Command not found");
-        free_string_array(command);
-        exit(EXIT_FAILURE);
-    }
-    execve(command_file_path, command, envp);
-    perror("Error executing command");
-    free_string_array(command);
-    free(command_file_path);
-    exit(EXIT_FAILURE);
 }
 
 int main(int argc, char **argv, char **envp)
