@@ -15,6 +15,7 @@
 
 # include <fcntl.h>
 # include <unistd.h>
+# include <stdio.h>
 # include "libft/libft.h"
 
 void	free_string_array(char **array);
