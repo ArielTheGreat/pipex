@@ -36,7 +36,10 @@ void	wait_children(pid_t pid1, pid_t pid2, int *return_value)
 
 	waitpid(pid1, &status1, 0);
 	waitpid(pid2, &status2, 0);
-	*return_value = 0;
+	if ((status1 == 256 && status2 == 256) || status2 == 256)
+		*return_value = 127;
+	else
+		*return_value = 0;
 }
 
 pid_t	create_child(pid_t *pid)
