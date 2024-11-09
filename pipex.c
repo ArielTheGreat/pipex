@@ -30,12 +30,10 @@ void	handle_number_of_arguments(int argc)
 	}
 }
 
-void	wait_children(pid_t pid1, pid_t pid2, int *return_value)
+void	wait_children(pid_t pid1, pid_t pid2, int *return_value, int status1)
 {
-	int status1, status2;
+	int status2;
 
-	waitpid(pid1, &status1, 0);
-	waitpid(pid2, &status2, 0);
 	if ((status1 == 256 && status2 == 256) || status2 == 256)
 		*return_value = 127;
 	else
@@ -60,6 +58,7 @@ int	main(int argc, char **argv, char **envp)
 	int		fd_outfile;
 	pid_t	pid1;
 	pid_t	pid2;
+	int		status1;
 
 	handle_number_of_arguments(argc);
 	handle_infile_opening(argv[1], &fd_infile);
@@ -71,13 +70,10 @@ int	main(int argc, char **argv, char **envp)
 		close_fd(fd_infile, fd_outfile, fd);
 		execute_command_and_fail(argv[2], envp);
 	}
-	if (create_child(&pid2) == 0)
-	{
-		second_child(fd_outfile, fd);
-		close_fd(fd_infile, fd_outfile, fd);
-		execute_command_and_fail(argv[3], envp);
-	}
+	waitpid(pid1, &status1, 0);
+	second_child(fd_outfile, fd);
 	close_fd(fd_infile, fd_outfile, fd);
-	wait_children(pid1, pid2, &fd_infile);
+	execute_command_and_fail(argv[3], envp);
+	wait_children(pid1, pid2, &fd_infile, status1);
 	return (fd_infile);
 }
