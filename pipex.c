@@ -30,17 +30,6 @@ void	handle_number_of_arguments(int argc)
 	}
 }
 
-void	wait_children(int *return_value, int status1)
-{
-	int status2;
-
-	status2 = 0;
-	if ((status1 == 256 && status2 == 256) || status2 == 256)
-		*return_value = 127;
-	else
-		*return_value = 0;
-}
-
 pid_t	create_child(pid_t *pid)
 {
 	*pid = fork();
@@ -55,25 +44,20 @@ pid_t	create_child(pid_t *pid)
 int	main(int argc, char **argv, char **envp)
 {
 	int		fd[2];
-	int		fd_infile;
-	int		fd_outfile;
 	pid_t	pid1;
 	int		status1;
 
 	handle_number_of_arguments(argc);
-	handle_infile_opening(argv[1], &fd_infile);
-	handle_outfile_opening(argv[4], &fd_outfile);
 	handle_pipe_creation(fd);
 	if (create_child(&pid1) == 0)
 	{
-		first_child(fd_infile, fd);
-		close_fd(fd_infile, fd_outfile, fd);
-		execute_command_and_fail(argv[2], envp);
+		first_child(argv[1], fd);
+		execute_command(argv[2], envp);
+		perror("Error executing second command");
+	    exit(EXIT_FAILURE);
 	}
 	waitpid(pid1, &status1, 0);
-	second_child(fd_outfile, fd);
-	close_fd(fd_infile, fd_outfile, fd);
-	execute_command_and_fail(argv[3], envp);
-	wait_children(&fd_infile, status1);
-	return (fd_infile);
+	second_child(argv[4], fd);
+	execute_command(argv, envp);
+    return (127);
 }

@@ -12,9 +12,12 @@
 
 #include "pipex.h"
 
-void	first_child(int fd_in, int *fd)
+void	first_child(char *infile_path, int *fd)
 {
-	if (dup2(fd_in, STDIN_FILENO) == -1)
+    int fd_infile;
+
+    handle_infile_opening(infile_path, &fd_infile);
+	if (dup2(fd_infile, STDIN_FILENO) == -1)
     {
         perror("Error duplicating input file descriptor in first child");
         exit(EXIT_FAILURE);
@@ -24,33 +27,27 @@ void	first_child(int fd_in, int *fd)
         perror("Error duplicating pipe write end in first child");
         exit(EXIT_FAILURE);
     }
+    close(fd_infile);
+	close(fd[0]);
+	close(fd[1]);
 }
 
-void	second_child(int fd_out, int *fd)
+void	second_child(char   *outfile_path, int *fd)
 {
+    int fd_outfile;
+
+    handle_outfile_opening(outfile_path, &fd_outfile);
 	if (dup2(fd[0], STDIN_FILENO) == -1)
     {
         perror("Error duplicating pipe read in second child");
         exit(EXIT_FAILURE);
     }
-	if (dup2(fd_out, STDOUT_FILENO) == -1)
+	if (dup2(fd_outfile, STDOUT_FILENO) == -1)
     {
         perror("Error duplicating output file in second child");
         exit(EXIT_FAILURE);
     }
-}
-
-void	close_fd(int fd_in, int fd_out, int *fd)
-{
-	close(fd_in);
-	close(fd_out);
+	close(fd_outfile);
 	close(fd[0]);
 	close(fd[1]);
-}
-
-void	execute_command_and_fail(char *argv, char **envp)
-{
-	execute_command(argv, envp);
-	perror("Error executing second command");
-	exit(EXIT_FAILURE);
 }
