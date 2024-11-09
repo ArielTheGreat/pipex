@@ -54,10 +54,10 @@ int	main(int argc, char **argv, char **envp)
 		first_child(argv[1], fd);
 		execute_command(argv[2], envp);
 		perror("Error executing second command");
-	    exit(EXIT_FAILURE);
+		exit(EXIT_FAILURE);
 	}
 	waitpid(pid1, &status1, 0);
 	second_child(argv[4], fd);
 	execute_command(argv[3], envp);
-    return (127);
+	return (127);
 }
