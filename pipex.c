@@ -30,10 +30,13 @@ void	handle_number_of_arguments(int argc)
 	}
 }
 
-void	wait_children(pid_t pid1, pid_t pid2)
+void	wait_children(pid_t pid1, pid_t pid2, int *return_value)
 {
-	waitpid(pid1, NULL, 0);
-	waitpid(pid2, NULL, 0);
+	int status1, status2;
+
+	waitpid(pid1, &status1, 0);
+	waitpid(pid2, &status2, 0);
+	*return_value = 0;
 }
 
 pid_t	create_child(pid_t *pid)
@@ -72,6 +75,6 @@ int	main(int argc, char **argv, char **envp)
 		execute_command_and_fail(argv[3], envp);
 	}
 	close_fd(fd_infile, fd_outfile, fd);
-	wait_children(pid1, pid2);
-	return (0);
+	wait_children(pid1, pid2, &fd_infile);
+	return (fd_infile);
 }
