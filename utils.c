@@ -85,7 +85,7 @@ void	execute_command(char *str, char **envp)
 	{
 		perror("Command not found");
 		free_string_array(command);
-		exit(EXIT_FAILURE);
+		exit(127);
 	}
 	execve(command_file_path, command, envp);
 	perror("Error executing command");
