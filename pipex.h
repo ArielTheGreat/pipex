@@ -23,7 +23,7 @@ char	*get_command_file_path(char *command, char **envp);
 void	handle_infile_opening(char *str, int *fd_infile);
 void	handle_outfile_opening(char *str, int *fd_outfile);
 void	execute_command(char *str, char **envp);
-void	second_child(int fd_out, int *fd);
-void	first_child(int fd_in, int *fd);
+void	second_child(char *outfile_path, int *fd);
+void	first_child(char *infile_path, int *fd);
 
 #endif
