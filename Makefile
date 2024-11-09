@@ -18,9 +18,11 @@ OBJS 	= ${SRCS:.c=.o}
 
 NAME = pipex
 
-all: ${OBJS}
+$(NAME): ${OBJS}
 	@make re -C ./libft
 	@$(CC) ${CFLAGS} ${OBJS} -Llibft -lft -o ${NAME}
+
+all: $(NAME)
 
 clean:
 	@make clean -C ./libft
