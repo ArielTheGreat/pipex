@@ -14,14 +14,30 @@
 
 void	first_child(int fd_in, int *fd)
 {
-	dup2(fd_in, STDIN_FILENO);
-	dup2(fd[1], STDOUT_FILENO);
+	if (dup2(fd_in, STDIN_FILENO) == -1)
+    {
+        perror("Error duplicating input file descriptor in first child");
+        exit(EXIT_FAILURE);
+    }
+	if (dup2(fd[1], STDOUT_FILENO) == -1)
+    {
+        perror("Error duplicating pipe write end in first child");
+        exit(EXIT_FAILURE);
+    }
 }
 
 void	second_child(int fd_out, int *fd)
 {
-	dup2(fd[0], STDIN_FILENO);
-	dup2(fd_out, STDOUT_FILENO);
+	if (dup2(fd[0], STDIN_FILENO) == -1)
+    {
+        perror("Error duplicating pipe read in second child");
+        exit(EXIT_FAILURE);
+    }
+	if (dup2(fd_out, STDOUT_FILENO) == -1)
+    {
+        perror("Error duplicating output file in second child");
+        exit(EXIT_FAILURE);
+    }
 }
 
 void	close_fd(int fd_in, int fd_out, int *fd)
