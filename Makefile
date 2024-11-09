@@ -20,7 +20,7 @@ NAME = pipex
 
 all: ${OBJS}
 	@make re -C ./libft
-	@$(CC) ${OBJS} -Llibft -lft -o ${NAME}
+	@$(CC) ${CFLAGS} ${OBJS} -Llibft -lft -o ${NAME}
 
 clean:
 	@make clean -C ./libft
