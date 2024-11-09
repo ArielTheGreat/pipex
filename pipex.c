@@ -58,6 +58,6 @@ int	main(int argc, char **argv, char **envp)
 	}
 	waitpid(pid1, &status1, 0);
 	second_child(argv[4], fd);
-	execute_command(argv, envp);
+	execute_command(argv[3], envp);
     return (127);
 }
