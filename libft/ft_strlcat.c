@@ -18,7 +18,7 @@ size_t	ft_strlcat(char *restrict dst, const char *restrict src, size_t dstsize)
 	size_t	counter3;
 
 	counter = 0;
-	while (dst[counter] != '\0' & counter < dstsize)
+	while ((dst[counter] != '\0') & (counter < dstsize))
 		counter++;
 	counter2 = ft_strlen(src);
 	if (dstsize == 0)
